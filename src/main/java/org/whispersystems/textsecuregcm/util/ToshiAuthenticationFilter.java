@@ -31,7 +31,7 @@ import org.spongycastle.jcajce.provider.digest.Keccak.DigestKeccak;
 import org.spongycastle.jcajce.provider.digest.Keccak.Digest256;
 import java.util.Base64;
 
-import java.util.logging;
+import java.util.logging.Logger;
 
 @Provider
 @RequiresToshiAuthentication
