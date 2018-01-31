@@ -31,6 +31,8 @@ import org.spongycastle.jcajce.provider.digest.Keccak.DigestKeccak;
 import org.spongycastle.jcajce.provider.digest.Keccak.Digest256;
 import java.util.Base64;
 
+import java.util.logging;
+
 @Provider
 @RequiresToshiAuthentication
 public class ToshiAuthenticationFilter implements ContainerRequestFilter {
@@ -76,7 +78,7 @@ public class ToshiAuthenticationFilter implements ContainerRequestFilter {
         SignatureLengthException {
 
         
-        Logger logger = Logger.getLogger(MyClass.class.getName());
+        Logger logger = java.util.logging.Logger.getLogger(MyClass.class.getName());
         //logger.setLevel(Level.INFO);
 
         logger.log("verb");
