@@ -130,15 +130,16 @@ public class ToshiAuthenticationFilter implements ContainerRequestFilter {
         System.out.print(signature);
         if (signature.validateComponents()) {
             byte[] address = ECKey.signatureToAddress(payloadHash, signature);
+            System.out.print("address");
+            System.out.print(address);
             hexAddress = "0x" + new String(Hex.encode(address));
         } else {
             throw new InvalidComponentsException();
         }
-        System.out.print("address");
-        System.out.print(address);
+        
         System.out.print("hexAddress");
         System.out.print(hexAddress);
-        
+
         return hexAddress;
     }
 
