@@ -77,16 +77,18 @@ public class ToshiAuthenticationFilter implements ContainerRequestFilter {
 
         
         Logger logger = Logger.getLogger(MyClass.class.getName());
-        logger.log(level.info,"verb");
-        logger.log(level.info,verb);
-        logger.log(level.info,"path");
-        logger.log(level.info,path);
-        logger.log(level.info,"body");
-        logger.log(level.info,body);
-        logger.log(level.info,"timestamp");
-        logger.log(level.info,timestamp);
-        logger.log(level.info,"rawSignature");
-        logger.log(level.info,rawSignature);
+        logger.setLevel(Level.INFO);
+
+        logger.log("verb");
+        logger.log(verb);
+        logger.log("path");
+        logger.log(path);
+        logger.log("body");
+        logger.log(body);
+        logger.log("timestamp");
+        logger.log(ltimestamp);
+        logger.log("rawSignature");
+        logger.log(rawSignature);
         
 
         String hexAddress = null;
@@ -99,25 +101,25 @@ public class ToshiAuthenticationFilter implements ContainerRequestFilter {
         keccak.update(body.getBytes());
         byte[] hash = keccak.digest();
 
-        logger.log(level.info,"hash");
-        logger.log(level.info,hash);
+        logger.log("hash");
+        logger.log(hash);
         byte[] encodedHashBytes = Base64.getEncoder().encode(hash);
         String encodedHash = new String(encodedHashBytes);
 
-        logger.log(level.info,"encodedHash");
-        logger.log(level.info,encodedHash);
+        logger.log("encodedHash");
+        logger.log(encodedHash);
         String payload = verb+"\n"+path+"\n"+timestamp+"\n"+encodedHash;
 
-        logger.log(level.info,"payload");
-        logger.log(level.info,payload);
+        logger.log("payload");
+        logger.log(payload);
         byte[] payloadHash = sha3(payload.getBytes());
 
-        logger.log(level.info,"payloadHash");
-        logger.log(level.info,payloadHash);
+        logger.log("payloadHash");
+        logger.log(payloadHash);
         byte[] sig = Hex.decode(rawSignature.substring(2));
 
-        logger.log(level.info,"sig");
-        logger.log(level.info,sig);
+        logger.log("sig");
+        logger.log(sig);
 
         byte[] r = new byte[32];
         System.arraycopy(sig, 0, r, 0, 32);
@@ -133,20 +135,20 @@ public class ToshiAuthenticationFilter implements ContainerRequestFilter {
 
         ECDSASignature signature = ECKey.ECDSASignature.fromComponents(r, s, v);
 
-        logger.log(level.info,"signature");
-        logger.log(level.info,signature);
+        logger.log("signature");
+        logger.log(signature);
         if (signature.validateComponents()) {
             byte[] address = ECKey.signatureToAddress(payloadHash, signature);
 
-            logger.log(level.info,"address");
-            logger.log(level.info,address);
+            logger.log("address");
+            logger.log(address);
             hexAddress = "0x" + new String(Hex.encode(address));
         } else {
             throw new InvalidComponentsException();
         }
         
-        logger.log(level.info,"hexAddress");
-        logger.log(level.info,hexAddress);
+        logger.log("hexAddress");
+        logger.log(hexAddress);
 
         return hexAddress;
     }
