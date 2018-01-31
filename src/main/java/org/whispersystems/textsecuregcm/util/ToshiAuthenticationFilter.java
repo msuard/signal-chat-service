@@ -82,8 +82,8 @@ public class ToshiAuthenticationFilter implements ContainerRequestFilter {
         //Logger logger = java.util.logging.Logger.getLogger(MyClass.class.getName());
         //logger.setLevel(Level.INFO);
 
-        logger.log(Level.FINE,"verb");
-        logger.log(Level.FINE,verb);
+        logger.log(Level.INFO,"verb");
+        logger.log(Level.INFO,verb);
         logger.log(Level.FINE,"path");
         logger.log(Level.FINE,path);
         logger.log(Level.FINE,"body");
@@ -104,8 +104,8 @@ public class ToshiAuthenticationFilter implements ContainerRequestFilter {
         keccak.update(body.getBytes());
         byte[] hash = keccak.digest();
 
-        logger.log(Level.FINE,"hash");
-        logger.log(Level.FINE,hash.toString());
+        logger.log(Level.INFO,"hash");
+        logger.log(Level.INFO,hash.toString());
         byte[] encodedHashBytes = Base64.getEncoder().encode(hash);
         String encodedHash = new String(encodedHashBytes);
 
