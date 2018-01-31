@@ -77,7 +77,7 @@ public class ToshiAuthenticationFilter implements ContainerRequestFilter {
 
         
         Logger logger = Logger.getLogger(MyClass.class.getName());
-        logger.setLevel(Level.INFO);
+        //logger.setLevel(Level.INFO);
 
         logger.log("verb");
         logger.log(verb);
