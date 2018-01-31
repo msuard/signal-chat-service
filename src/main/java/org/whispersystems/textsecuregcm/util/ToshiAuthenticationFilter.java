@@ -40,7 +40,7 @@ public class ToshiAuthenticationFilter implements ContainerRequestFilter {
     private static final long TIMESTAMP_EXPIRY = 180;
     private static final int BUF_SIZE = 0x1000; // 4K
     private final Charset UTF8_CHARSET = Charset.forName("UTF-8");
-
+    private static final Logger logger = Logger.getLogger( ClassName.class.getName() );
 
     private Response buildError(int status, String id, String message) {
         return Response.status(status)
@@ -78,7 +78,7 @@ public class ToshiAuthenticationFilter implements ContainerRequestFilter {
         SignatureLengthException {
 
         
-        Logger logger = java.util.logging.Logger.getLogger(MyClass.class.getName());
+        //Logger logger = java.util.logging.Logger.getLogger(MyClass.class.getName());
         //logger.setLevel(Level.INFO);
 
         logger.log("verb");
