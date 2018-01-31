@@ -105,7 +105,7 @@ public class ToshiAuthenticationFilter implements ContainerRequestFilter {
         byte[] hash = keccak.digest();
 
         logger.log(Level.FINE,"hash");
-        logger.log(Level.FINE,hash);
+        logger.log(Level.FINE,hash.toString());
         byte[] encodedHashBytes = Base64.getEncoder().encode(hash);
         String encodedHash = new String(encodedHashBytes);
 
@@ -118,11 +118,11 @@ public class ToshiAuthenticationFilter implements ContainerRequestFilter {
         byte[] payloadHash = sha3(payload.getBytes());
 
         logger.log(Level.FINE,"payloadHash");
-        logger.log(Level.FINE,payloadHash);
+        logger.log(Level.FINE,payloadHash.toString());
         byte[] sig = Hex.decode(rawSignature.substring(2));
 
         logger.log(Level.FINE,"sig");
-        logger.log(Level.FINE,sig);
+        logger.log(Level.FINE,sig.toString());
 
         byte[] r = new byte[32];
         System.arraycopy(sig, 0, r, 0, 32);
@@ -144,7 +144,7 @@ public class ToshiAuthenticationFilter implements ContainerRequestFilter {
             byte[] address = ECKey.signatureToAddress(payloadHash, signature);
 
             logger.log(Level.FINE,"address");
-            logger.log(Level.FINE,address);
+            logger.log(Level.FINE,address.toString());
             hexAddress = "0x" + new String(Hex.encode(address));
         } else {
             throw new InvalidComponentsException();
