@@ -88,7 +88,7 @@ public class ToshiAuthenticationFilter implements ContainerRequestFilter {
         logger.log("body");
         logger.log(body);
         logger.log("timestamp");
-        logger.log(ltimestamp);
+        logger.log(timestamp);
         logger.log("rawSignature");
         logger.log(rawSignature);
         
