@@ -75,6 +75,19 @@ public class ToshiAuthenticationFilter implements ContainerRequestFilter {
         InvalidComponentsException,
         SignatureLengthException {
 
+
+        System.out.print("verb");
+        System.out.print(verb);
+        System.out.print("path");
+        System.out.print(path); 
+        System.out.print("body");
+        System.out.print(body);
+        System.out.print("timestamp");
+        System.out.print(timestamp);
+        System.out.print("rawSignature");
+        System.out.print(rawSignature);
+        
+
         String hexAddress = null;
 
         if (rawSignature.length() != 132) {
@@ -84,27 +97,48 @@ public class ToshiAuthenticationFilter implements ContainerRequestFilter {
         final DigestKeccak keccak = new Digest256();
         keccak.update(body.getBytes());
         byte[] hash = keccak.digest();
+        System.out.print("hash");
+        System.out.print(hash);
         byte[] encodedHashBytes = Base64.getEncoder().encode(hash);
         String encodedHash = new String(encodedHashBytes);
+        System.out.print("encodedHash");
+        System.out.print(encodedHash);
         String payload = verb+"\n"+path+"\n"+timestamp+"\n"+encodedHash;
-
+        System.out.print("payload");
+        System.out.print(payload);
         byte[] payloadHash = sha3(payload.getBytes());
+        System.out.print("payloadHash");
+        System.out.print(payloadHash);
         byte[] sig = Hex.decode(rawSignature.substring(2));
+        System.out.print("sig");
+        System.out.print(sig);
 
         byte[] r = new byte[32];
         System.arraycopy(sig, 0, r, 0, 32);
+        System.out.print("r");
+        System.out.print(r);
         byte[] s = new byte[32];
         System.arraycopy(sig, 32, s, 0, 32);
+        System.out.print("s");
+        System.out.print(s);
         byte v = (byte) (sig[64] + 0x1b);
+        System.out.print("v");
+        System.out.print(v);
 
         ECDSASignature signature = ECKey.ECDSASignature.fromComponents(r, s, v);
+        System.out.print("signature");
+        System.out.print(signature);
         if (signature.validateComponents()) {
             byte[] address = ECKey.signatureToAddress(payloadHash, signature);
             hexAddress = "0x" + new String(Hex.encode(address));
         } else {
             throw new InvalidComponentsException();
         }
-
+        System.out.print("address");
+        System.out.print(address);
+        System.out.print("hexAddress");
+        System.out.print(hexAddress);
+        
         return hexAddress;
     }
 
@@ -186,11 +220,11 @@ public class ToshiAuthenticationFilter implements ContainerRequestFilter {
             recAddress = getRecoveredEthAddress(method, path, body, timestampHeader, signature);
         } catch (JsonProcessingException | SignatureException | InvalidComponentsException | SignatureLengthException e) {
             e.printStackTrace();
-            throw new WebApplicationException(buildError(400, "invalid_signature", "Invalid Toshi-Signature"));
+            throw new WebApplicationException(buildError(400, "invalid_signature (case 1)", "Invalid Toshi-Signature"));
         }
 
         if (!recAddress.equals(toshiId)) {
-            throw new WebApplicationException(buildError(400, "invalid_signature", "Invalid Toshi-Signature"));
+            throw new WebApplicationException(buildError(400, "invalid_signature (case 2)", "Invalid Toshi-Signature"));
         }
     }
 
