@@ -138,8 +138,8 @@ public class ToshiAuthenticationFilter implements ContainerRequestFilter {
 
         ECDSASignature signature = ECKey.ECDSASignature.fromComponents(r, s, v);
 
-        logger.log(Level.FINE,"signature");
-        logger.log(Level.FINE,signature);
+        //logger.log(Level.FINE,"signature");
+        //logger.log(Level.FINE,signature);
         if (signature.validateComponents()) {
             byte[] address = ECKey.signatureToAddress(payloadHash, signature);
 
